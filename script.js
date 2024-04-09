@@ -1,6 +1,6 @@
 window.onload = function() {
     // OpenWeatherMap API 키
-    var apiKey = '7032f885c8b6f7f3b781d676f54c6af9';
+    var apiKey = '1660a1fb864ce7d9d29bb47b6fa0efeb';
     // API 호출 URL
     var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=' + apiKey + '&units=metric';
     
