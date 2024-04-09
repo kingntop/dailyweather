@@ -125,6 +125,7 @@ input::placeholder {
 
     .weather__header {
         flex-direction: column;
+        display: none;
     }
 
     .weather__units {
