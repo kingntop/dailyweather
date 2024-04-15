@@ -12,7 +12,7 @@ let newdate = `${month} ${day}, ${year}`;
 
 const app = document.querySelector('.app');
 
-fetch('https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=2d48b1d7080d09ea964e645ccd1ec93f&units=metric')
+fetch('https://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&APPID=2d48b1d7080d09ea964e645ccd1ec93f&units=metric')
     .then(response => response.json())
     .then(data => {
         console.log(data)
@@ -51,49 +51,7 @@ fetch('https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=2d48b1d
             <p>${data.main.pressure} mph</p>
         </div>
     </div>
-</div>
-<div class="dataweather">
-    <h4>The next five days</h4>
-    <div class="table">
-        <div class="tempday">
-            <p>SUN</p>
-            <div class="box">
-            <i class="fas fa-wind"></i>
-            <p>23°C</p>
-            </div>
-        </div>
-        <div class="tempday">
-            <p>SUN</p>
-            <div class="box">
-            <i class="fas fa-cloud"></i>
-            <p>12°C</p>
-            </div>
-        </div>
-        <div class="tempday">
-            <p>SUN</p>
-            <div class="box">
-            <i class="fas fa-sun"></i>
-            <p>11°C</p>
-            </div>
-        </div>
-        <div class="tempday">
-            <p>SUN</p>
-            <div class="box">
-            <i class="far fa-sun"></i>
-            <p>10°C</p>
-            </div>
-        </div>
-        <div class="tempday">
-            <p>SUN</p>
-            <div class="box">
-            <i class="fas fa-cloud-sun"></i>
-            <p>05°C</p>
-            </div>
-        </div>
-    </div>
-    <div class="firm">
-        <p>Powered by <a href="https://github.com/irwingb1979" target="_blank">@irwing</a></p>
-    </div>
+
 </div>`)
 
     });
