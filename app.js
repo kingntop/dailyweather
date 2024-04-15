@@ -1,94 +1,100 @@
-// state
-let currCity = "Seoul";
-let units = "metric";
+'use strict'
+const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
 
-// Selectors
-let city = document.querySelector(".weather__city");
-let datetime = document.querySelector(".weather__datetime");
-let weather__forecast = document.querySelector('.weather__forecast');
-let weather__temperature = document.querySelector(".weather__temperature");
-let weather__icon = document.querySelector(".weather__icon");
-let weather__minmax = document.querySelector(".weather__minmax")
-let weather__realfeel = document.querySelector('.weather__realfeel');
-let weather__humidity = document.querySelector('.weather__humidity');
-let weather__wind = document.querySelector('.weather__wind');
-let weather__pressure = document.querySelector('.weather__pressure');
+let dateObj = new Date();
+let month = monthNames[dateObj.getUTCMonth()];
+let day = dateObj.getUTCDate() - 1;
+let year = dateObj.getUTCFullYear();
 
-// search
-document.querySelector(".weather__search").addEventListener('submit', e => {
-    let search = document.querySelector(".weather__searchform");
-    // prevent default action
-    e.preventDefault();
-    // change current city
-    currCity = search.value;
-    // get weather forecast 
-    getWeather();
-    // clear form
-    search.value = ""
-})
+let newdate = `${month} ${day}, ${year}`;
 
-// units
-document.querySelector(".weather_unit_celsius").addEventListener('click', () => {
-    if(units !== "metric"){
-        // change to metric
-        units = "metric"
-        // get weather forecast 
-        getWeather()
-    }
-})
+const app = document.querySelector('.app');
 
-document.querySelector(".weather_unit_farenheit").addEventListener('click', () => {
-    if(units !== "imperial"){
-        // change to imperial
-        units = "imperial"
-        // get weather forecast 
-        getWeather()
-    }
-})
+fetch('https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=2d48b1d7080d09ea964e645ccd1ec93f&units=metric')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
 
-function convertTimeStamp(timestamp, timezone){
-     const convertTimezone = timezone / 3600; // convert seconds to hours 
-
-    const date = new Date(timestamp * 1000);
+        app.insertAdjacentHTML('afterbegin', `<div class="bar">
+        <div class="center"><a href="#"><i class="fas fa-crosshairs"></i></a></div>
+        <div class="search"><a href="#"><i class="fas fa-search"></i></a></div>
+    </div><div class="titlebar">
+    <p class="date">${newdate}</p>
+    <h4 class="city">${data.name}</h4>
+    <p class="description">${data.weather[0].description}</p>
+</div>
+<div class="temperature">
+    <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+    <h2>${Math.round(data.main.temp)}°C</h2>
+</div>
+<div class="extra">
+    <div class="col">
+        <div class="info">
+            <h5>Wind Status</h5>
+            <p>${data.wind.speed}mps</p>
+        </div>
+        <div class="info">
+            <h5>Visibility</h5>
+            <p>${data.visibility} m</p>
+        </div>
+    </div>
     
-    const options = {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        timeZone: `Etc/GMT${convertTimezone >= 0 ? "-" : "+"}${Math.abs(convertTimezone)}`,
-        hour12: true,
-    }
-    return date.toLocaleString("en-US", options)
-   
-}
+    <div class="col">
+        <div class="info">
+            <h5>Humidity</h5>
+            <p>${data.main.humidity}%</p>
+        </div>
+        <div class="info">
+            <h5>Air pressure</h5>
+            <p>${data.main.pressure} mph</p>
+        </div>
+    </div>
+</div>
+<div class="dataweather">
+    <h4>The next five days</h4>
+    <div class="table">
+        <div class="tempday">
+            <p>SUN</p>
+            <div class="box">
+            <i class="fas fa-wind"></i>
+            <p>23°C</p>
+            </div>
+        </div>
+        <div class="tempday">
+            <p>SUN</p>
+            <div class="box">
+            <i class="fas fa-cloud"></i>
+            <p>12°C</p>
+            </div>
+        </div>
+        <div class="tempday">
+            <p>SUN</p>
+            <div class="box">
+            <i class="fas fa-sun"></i>
+            <p>11°C</p>
+            </div>
+        </div>
+        <div class="tempday">
+            <p>SUN</p>
+            <div class="box">
+            <i class="far fa-sun"></i>
+            <p>10°C</p>
+            </div>
+        </div>
+        <div class="tempday">
+            <p>SUN</p>
+            <div class="box">
+            <i class="fas fa-cloud-sun"></i>
+            <p>05°C</p>
+            </div>
+        </div>
+    </div>
+    <div class="firm">
+        <p>Powered by <a href="https://github.com/irwingb1979" target="_blank">@irwing</a></p>
+    </div>
+</div>`)
 
- 
+    });
 
-// convert country code to name
-function convertCountryCode(country){
-    let regionNames = new Intl.DisplayNames(["en"], {type: "region"});
-    return regionNames.of(country)
-}
-
-function getWeather(){
-    const API_KEY = '64f60853740a1ee3ba20d0fb595c97d5'
-
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API_KEY}&units=${units}`).then(res => res.json()).then(data => {
-    console.log(data)
-    city.innerHTML = `${data.name}, ${convertCountryCode(data.sys.country)}`
-    datetime.innerHTML = convertTimeStamp(data.dt, data.timezone); 
-    weather__forecast.innerHTML = `<p>${data.weather[0].main}`
-    weather__temperature.innerHTML = `${data.main.temp.toFixed()}&#176`
-    weather__icon.innerHTML = `   <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png" />`
-    weather__minmax.innerHTML = `<p>Min: ${data.main.temp_min.toFixed()}&#176</p><p>Max: ${data.main.temp_max.toFixed()}&#176</p>`
-    weather__realfeel.innerHTML = `${data.main.feels_like.toFixed()}&#176`
-    weather__humidity.innerHTML = `${data.main.humidity}%`
-    weather__wind.innerHTML = `${data.wind.speed} ${units === "imperial" ? "mph": "m/s"}` 
-    weather__pressure.innerHTML = `${data.main.pressure} hPa`
-})
-}
-
-document.body.addEventListener('load', getWeather())

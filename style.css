@@ -1,141 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
 }
-
-.container {
-    background: #171717;
-    color: #fff;
-    padding: 2rem;
-    width: 40%;
-    margin: 4rem auto;
-    border-radius: 10px;
-}
-
-.weather__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-input {
-    border: none;
-    background: #1e1e1e;
-    outline: none;
-    color: #fff;
-    padding: 0.5rem 2.5rem;
-    border-radius: 5px;
-}
-
-input::placeholder {
-    color: #fff;
-}
-
-.weather__search {
-    position: relative;
-}
-
-.weather__search i {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    font-size: 15px;
-    color: #fff;
-}
-
-.weather__units {
-    font-size: 1.5rem;
-}
-
-.weather__units span {
-    cursor: pointer;
-}
-
-.weather__units span:first-child {
-    margin-right: 0.5rem;
-}
-
-.weather__body {
-    text-align: center;
-    margin-top: 3rem;
-}
-
-.weather__datetime {
-    margin-bottom: 2rem;
-    font-size: 14px;
-}
-
-.weather__forecast {
-    background: #1e1e1e;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    border-radius: 30px;
-}
-
-.weather__icon img {
-    width: 100px;
-}
-
-.weather__temperature {
-    font-size: 1.75rem;
-}
-
-.weather__minmax {
-    display: flex;
-    justify-content: center;
-}
-
-.weather__minmax p {
-    font-size: 14px;
+p, h5 {
     margin: 0.5rem;
 }
-
-.weather__info {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 1rem;
-    margin-top: 3rem;
+.app {
+    width: 414px;
+    height: 800px;
+    display: block;
+    margin: auto;
+    text-align: center;
+    padding: 40px 0;
+    overflow: hidden;
+    border-radius: 50px;
+    background-image: linear-gradient(#30A2C5, #00242F);
 }
-
-.weather__card {
+.bar {
     display: flex;
-    align-items: center;
-    background: #1e1e1e;
-    padding: 1rem;
-    border-radius: 10px;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+.bar a {
+    color: #fff;
+    font-size: 20px;
+}
+.titlebar {
+    line-height: 0.5rem;
+    color: #fff;
+}
+.titlebar h4 {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 2rem;
+}
+.titlebar .description {
+    text-transform: uppercase;
 }
 
-.weather__card i {
-    font-size: 1.5rem;
-    margin-right: 1rem;
+.temperature {
+    background: rgb(206, 206, 206);
+    border-radius: 500px;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    display: block;
+    margin: auto;
+    box-shadow: 0 30px 20px #1d1d1d36;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
-
-.weather__card p {
+.temperature img {
+    margin-bottom:-20px;
+}
+.temperature p {
     font-size: 14px;
 }
-
-@media(max-width: 936px){
-    .container {
-        width: 90%;
-    }
-
-    .weather__header {
-        flex-direction: column;
-        display: none;
-    }
-
-    .weather__units {
-        margin-top: 1rem;
-    }
+.temperature h2 {
+    margin: 0;
+    font-size: 60px;
+    font-weight: 300;
 }
-
-
-@media(max-width: 400px){
-    .weather__info {
-        grid-template-columns: none;
-    }
+.extra {
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+    padding-bottom: 30px;
+}
+.extra .col .info{
+    padding-bottom: 10px;
+}
+.dataweather {
+    background: #fff;
+    padding: 20px;
+    border-radius: 50px;
+    margin-top: 20px;
+    display: block;
+    height: 400px;
+    font-size: 14px;
+    position: relative;
+}
+.dataweather .table {
+    display: flex;
+    justify-content: space-around;
+}
+.dataweather .table .box {
+    font-size: 14px;
+    border:#D4D4D4 solid 1px;
+    border-radius: 20px;
+    padding: 5px;
+    margin: 5px;
+}
+.dataweather .table div i {
+    font-size:150%;
+    color: #585858;
+}
+.dataweather .firm {
+    padding-top: 20px;
+    font-size: 12px;
 }
