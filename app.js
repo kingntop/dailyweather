@@ -3,12 +3,24 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
 
-let dateObj = new Date();
-let month = monthNames[dateObj.getUTCMonth()];
-let day = dateObj.getUTCDate() - 1;
-let year = dateObj.getUTCFullYear();
 
-let newdate = `${month} ${day}, ${year}`;
+
+let now = new Date();
+//연도 구하기
+let nowYear = now.getFullYear();
+//달 구하기
+let nowMonth = now.getMonth() + 1;
+//일 구하기
+let nowDate = now.getDate();
+//현재 시 구하기
+let nowHours = now.getHours();
+//현재 분 구하기
+let nowMins = now.getMinutes();
+//현재 초 구하기
+let nowSec = now.getSeconds();
+
+//그래서 지금은...
+let newdate = `${nowYear}-${nowMonth}-${nowDate} ${nowHours}:${nowMins}:${nowSec}`;
 
 const app = document.querySelector('.app');
 
