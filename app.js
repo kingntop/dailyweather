@@ -46,22 +46,22 @@ fetch('https://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&APPID=2d48b1d7
 <div class="extra">
     <div class="col">
         <div class="info">
-            <h5>Wind Status</h5>
+            <h5>바람</h5>
             <p>${data.wind.speed}mps</p>
         </div>
         <div class="info">
-            <h5>Visibility</h5>
+            <h5>시야</h5>
             <p>${data.visibility} m</p>
         </div>
     </div>
     
     <div class="col">
         <div class="info">
-            <h5>Humidity</h5>
+            <h5>습도</h5>
             <p>${data.main.humidity}%</p>
         </div>
         <div class="info">
-            <h5>Air pressure</h5>
+            <h5>기압</h5>
             <p>${data.main.pressure} mph</p>
         </div>
     </div>
