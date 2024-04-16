@@ -4,23 +4,26 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 
+function addZero(num) {
+    return num < 10 ? '0' + num : num; // 숫자가 10보다 작으면 앞에 0을 붙입니다.
+  }
 
 let now = new Date();
 //연도 구하기
 let nowYear = now.getFullYear();
 //달 구하기
-let nowMonth = now.getMonth() + 1;
+let nowMonth = addZero(now.getMonth() + 1);
 //일 구하기
 let nowDate = now.getDate();
 //현재 시 구하기
-let nowHours = now.getHours();
+let nowHours = addZero(now.getHours());
 //현재 분 구하기
-let nowMins = now.getMinutes();
+let nowMins = addZero(now.getMinutes());
 //현재 초 구하기
-let nowSec = now.getSeconds();
+let nowSec = addZero(now.getSeconds());
 
 //그래서 지금은...
-let newdate = `${nowYear}-${nowMonth}-${nowDate} ${nowHours}:${nowMins}:${nowSec}`;
+let newdate = `${nowYear}년 ${nowMonth}월 ${nowDate}일 ${nowHours}시 ${nowMins}분 ${nowSec}초`;
 
 const app = document.querySelector('.app');
 
