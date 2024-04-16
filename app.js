@@ -33,8 +33,7 @@ fetch('https://api.openweathermap.org/data/2.5/weather?q=Seoul,kr&APPID=2d48b1d7
         console.log(data)
 
         app.insertAdjacentHTML('afterbegin', `<div class="bar">
-        <div class="center"><a href="#"><i class="fas fa-crosshairs"></i></a></div>
-        <div class="search"><a href="#"><i class="fas fa-search"></i></a></div>
+
     </div><div class="titlebar">
     <p class="date">${newdate}</p>
     <h4 class="city">${data.name}</h4>
