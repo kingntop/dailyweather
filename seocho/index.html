@@ -570,23 +570,24 @@
             //     fetchDust();
             // }
             // TEST CODE----------------------------------------------
-            itime += 1000;
-            if (itime <= 1000) {
+            console.log('itime' + itime)
+            itime += 100;
+            if (itime <= 100) {
                 fetchWeather();
                 fetchDust();
+                console.log('fetchDust' + itime)
             }
             // if (parseInt(local_time.getMinutes()) >= 0 &&
             //     parseInt(local_time.getSeconds()) === 30) {
             //     fetchWeather();
             //     fetchDust();
             // }
-            
-            console.log('itime' + itime)
 
+            // console.log('itime' + itime)
             if (itime > 10000) {
                 itime = 0;
             }
-        }, 1000);
+        }, 100);
 
         // 날씨 데이터 호출
         const fetchWeather = () => {
