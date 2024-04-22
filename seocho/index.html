@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>FS Weather Contents</title>
+    <style>
+        @import url('//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
+        @font-face { font-family:'Cafe24Ssurround'; src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff'); font-weight:normal; font-style:normal; }
+
+        :root { --yellow:#FFF400; --red:#E11737; }
+        * { margin:0; padding:0; }
+        body { overflow:hidden; font-family:'Spoqa Han Sans'; }
+        .title { font-family:'Cafe24Ssurround'; letter-spacing:-.05em; }
+        .red { color:var(--red); }
+
+        .container { display:grid; grid-template-columns:768fr 1456fr; min-width:1920px; height:100vh; min-height:770px; }
+        .report-box { display:grid; grid-template-columns:1fr 1fr; padding:0 0.2604vw 0 0; background:#000; gap:0.2604vw; }
+        .report-wrapper:nth-of-type(1) { display:grid; grid-template-rows:1.25fr 4.375fr 4.375fr; gap:0.2604vw; }
+        .report-wrapper:nth-of-type(1) .report { background:var(--yellow); }
+        .report { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        .location-wrapper { display:flex; align-items:center; gap:0.2604vw; }
+        .location__icon { width:1.4063vw; }
+        .location { font-size:1.3542vw; font-weight:bold; }
+        .humidity-wrapper { padding:0 0.1042vw 0 0.2083vw; background:linear-gradient(to top, #fff 25.5%, transparent 25.5%); font-size:2.3438vw; font-weight:bold; line-height:1.1; }
+        .humidity__title, .dust__title { font-size:2.0833vw; font-weight:bold; }
+        .humidity { margin:0 0.3646vw 0 0; font-size:7.8125vw; letter-spacing:-.05em; }
+        .dust { margin:0.5208vw 0 0; font-size:5.9896vw; letter-spacing:-.05em; }
+        .dust span { padding:0 1.0417vw; background:linear-gradient(to top, transparent 2.5%, #fff 2.5%, #fff 32.25%, transparent 32.25%); }
+        .dust.length--4 { font-size:5.4688vw; line-height:1.25; }
+        .dust.length--4 span { background:linear-gradient(to top, transparent 10%, #fff 10%, #fff 46.25%, transparent 46.25%); }
+        .weather-box { position:relative; width:100%; height:100%; background:#fff; }
+        .weather__title { position:absolute; top:4.1667vw; padding:0 0.4688vw; background:linear-gradient(to top, transparent 5%, var(--yellow) 5%, var(--yellow) 45%, transparent 45%); font-size:2.0833vw; font-weight:bold; }
+        .weather__icon-box { display:flex; justify-content:center; width:60%; margin:0 0 12.5417vw; }
+        .weather__icon { display:block; width:100%; max-width:100%; max-height:9.3750vw; }
+        .weather-wrapper { position:absolute; bottom:5.7708vw; display:flex; flex-direction:column; align-items:center; }
+        .weather {  background:linear-gradient(to top, transparent 2.5%, var(--yellow) 2.5%, var(--yellow) 30%, transparent 30%); font-size:4.6875vw; font-weight:bold; }
+        .weather.length--1 { padding:0 0.3646vw; }
+        .temperature-wrapper { font-size:3.1250vw; font-weight:bold; line-height:1.15; letter-spacing:-.05em; }
+        .temperature { margin:0 0.7813vw 0 0; font-size:6.7708vw; letter-spacing:-.06em; }
+        .video-box { position:relative; background:#000; overflow:hidden; }
+
+        #video { position:absolute; top:50%; left:50%; width:100%; height:100%; transform:translate(-50%,-50%); object-fit:cover; pointer-events:none; z-index:2; } /* object-fit:cover; */
+        #image { position:absolute; top:50%; left:50%; min-width:100%; min-height:100%; transform:translate(-50%,-50%); z-index:1; }
+        video::-webkit-media-controls { display:none; }
+
+        @media screen and (max-width:1920px) {
+            .container { display:grid; grid-template-columns:768fr 1456fr; height:100vh; }
+            .report-box { display:grid; grid-template-columns:1fr 1fr; padding:0 5px 0 0; background:#000; gap:5px; }
+            .report-wrapper:nth-of-type(1) { display:grid; grid-template-rows:1.25fr 4.375fr 4.375fr; gap:5px; }
+            .report-wrapper:nth-of-type(1) .report { background:var(--yellow); }
+            .report { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+            .location-wrapper { display:flex; align-items:center; gap:5px; }
+            .location__icon { width:27px; }
+            .location { font-size:26px; font-weight:bold; }
+            .humidity-wrapper { padding:0 2px 0 4px; background:linear-gradient(to top, #fff 25.5%, transparent 25.5%); font-size:45px; font-weight:bold; line-height:1.1; }
+            .humidity__title, .dust__title { font-size:40px; font-weight:bold; }
+            .humidity { margin:0 7px 0 0; font-size:150px; letter-spacing:-.05em; }
+            .dust { margin:10px 0 0; font-size:115px; letter-spacing:-.05em; }
+            .dust span { padding:0 20px; background:linear-gradient(to top, transparent 2.5%, #fff 2.5%, #fff 32.25%, transparent 32.25%); }
+            .dust.length--4 { font-size:105px; line-height:1.25; }
+            .dust.length--4 span { background:linear-gradient(to top, transparent 10%, #fff 10%, #fff 46.25%, transparent 46.25%); }
+            .weather-box { position:relative; width:100%; height:100%; background:#fff; }
+            .weather__title { position:absolute; top:80px; padding:0 9px; background:linear-gradient(to top, transparent 5%, var(--yellow) 5%, var(--yellow) 45%, transparent 45%); font-size:40px; font-weight:bold; }
+            .weather__icon-box { display:flex; justify-content:center; width:60%; margin:0 0 260px; }
+            .weather__icon { display:block; max-width:100%; max-height:180px; }
+            .weather-wrapper { position:absolute; bottom:130px; display:flex; flex-direction:column; align-items:center; }
+            .weather {  background:linear-gradient(to top, transparent 2.5%, var(--yellow) 2.5%, var(--yellow) 30%, transparent 30%); font-size:90px; font-weight:bold; }
+            .weather.length--1 { padding:0 7px; }
+            .temperature-wrapper { font-size:60px; font-weight:bold; line-height:1.15; letter-spacing:-.05em; }
+            .temperature { margin:0 15px 0 0; font-size:130px; letter-spacing:-.06em; }
+            .video-box { position:relative; background:#000; overflow:hidden; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="report-box">
+            <div class="report-wrapper">
+                <div class="report location-box">
+                    <span class="location-wrapper">
+                        <svg class="location__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g transform="translate(0,512) scale(0.1,-0.1)" fill="#000000" stroke="none"><path d="M2515 3875 c-1318 -528 -2040 -822 -2057 -838 -23 -20 -28 -33 -28 -72 0 -39 5 -52 28 -72 15 -14 398 -190 851 -392 l824 -368 368 -824 c202 -453 378 -836 392 -851 20 -23 33 -28 72 -28 39 0 52 5 72 28 36 39 1653 4084 1653 4134 0 54 -47 98 -103 97 -30 -1 -623 -234 -2072 -814z"/></g></svg>
+                        <span class="location title">서울특별시 서초구</span>
+                    </span>
+                </div>
+                <div class="report humidity-box">
+                    <span class="humidity__title title">습도</span>
+                    <span class="humidity-wrapper">
+                        <strong class="humidity">-</strong>%
+                    </span>
+                </div>
+                <div class="report dust-box">
+                    <span class="dust__title title">미세먼지</span>
+                    <strong class="dust"><span>-</span></strong>
+                </div>
+            </div>
+            <div class="report-wrapper">
+                <div class="report weather-box">
+                    <span class="weather__title title">현재 날씨</span>
+                    <div class="weather__icon-box">
+                        <img src="./image/loading.gif" class="weather__icon" alt="날씨 아이콘" />
+                    </div>
+                    <div class="weather-wrapper">
+                        <span class="weather">-</span>
+                        <span class="temperature-wrapper">
+                            <strong class="temperature">-</strong>℃
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-box">
+            <img id="image" src="" />
+            <video id="video" src="" muted loop type="video/webm"></video>
+        </div>
+    </div>
+</body>
+<script>
+    (()=>{
+        const bg_image = document.getElementById('image');
+        const bg_video = document.getElementById('video');
+        const appId = 'bccc10b6a18915f742862a4a110f495b';
+
+        // 서울특별시 서초구 방배동
+        const lon = 126.9950916721;
+        const lat = 37.485033543708;
+
+        const weatherURL = `https://api.openweathermap.org/data/2.5/weather?&lang=kr&lat=${lat}&lon=${lon}&appid=${appId}`;
+        const dustURL = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}8&appid=${appId}`;
+
+        document.querySelectorAll('video').forEach((el,index)=>{
+            el.controls = false;
+        })
+
+        // 습도
+        const handleHumidityData = (humidity) => {
+            document.querySelector('.humidity').innerHTML = humidity;
+        }
+
+        // 미세먼지
+        const handleDustData = (data) => {
+            const el_dust = document.querySelector('.dust');
+            el_dust.className = 'dust';
+
+            switch (data) {
+                case 1:
+                    el_dust.classList.add('length--4');
+                    el_dust.innerHTML = `
+                        <span>매우</span>
+                        <br/>
+                        <span>좋음</span>
+                    `;
+                    break;
+                case 2:
+                    el_dust.innerHTML = '<span>좋음</span>';
+                    break;
+                case 3:
+                    el_dust.innerHTML = '<span>보통</span>';
+                    break;
+                case 4:
+                    el_dust.classList.add('red')
+                    el_dust.innerHTML = '<span>나쁨</span>';
+                    break;
+                case 5:
+                    el_dust.classList.add('red', 'length--4');
+                    el_dust.innerHTML = `
+                        <span>매우</span>
+                        <br/>
+                        <span>나쁨</span>
+                    `;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // 날씨
+        const handleWeatherData = (weather, windSpeed, temperature) => {
+            const el_weather = document.querySelector('.weather');
+            const el_icon = document.querySelector('.weather__icon');
+            el_weather.className = 'weather';
+
+            // 1)눈, 2)비
+            if (weather === 'Snow' || weather === 'Rain') {
+                el_icon.setAttribute('src', `./image/${weather.toLowerCase()}_icon.png`);
+                handleCurrentVideo(weather.toLowerCase());
+                el_weather.classList.add('length--1');
+                weather === 'Snow' ? el_weather.innerHTML = '눈' : el_weather.innerHTML = '비';
+            // 3)강추위, 4)강풍
+            } else if (windSpeed >= 14) {
+                // 3)강추위
+                if (temperature <= -10) {
+                    el_icon.setAttribute('src', './image/cold_icon.png');
+                    handleCurrentImage('cold');
+                    el_weather.innerHTML = '강추위';
+                // 4)강풍
+                } else {
+                    el_icon.setAttribute('src', './image/wind_icon.png');
+                    handleCurrentVideo('wind');
+                    el_weather.innerHTML = '강풍';
+                }
+            // 5)폭염, 6)맑음
+            } else if (weather === 'Clear' || weather === 'Clear sky') {
+                // 5)폭염
+                if (temperature >= 33) {
+                    el_icon.setAttribute('src', './image/heat_icon.png');
+                    handleCurrentVideo('heat');
+                    el_weather.innerHTML = '폭염';
+                // 6)맑음
+                } else {
+                    el_icon.setAttribute('src', './image/clear_icon.png');
+                    handleCurrentVideo('clear');
+                    el_weather.innerHTML = '맑음';
+                }
+            // 7)흐림
+            } else {
+                el_icon.setAttribute('src', './image/clouds_icon.png');
+                handleCurrentVideo('clouds');
+                el_weather.innerHTML = '흐림';
+            }
+        }
+
+        // 기온
+        const handleTemperatureData = (temperature) => {
+            document.querySelector('.temperature').innerHTML = temperature;
+        }
+
+        // 영상
+        const handleCurrentVideo = (weather) => {
+            bg_video.setAttribute('src', `./video/${weather}.webm`);
+            bg_image.setAttribute('src', '');
+        }
+
+        // 이미지
+        const handleCurrentImage = (weather) => {
+            bg_image.setAttribute('src', `./image/${weather}.png`);
+            bg_video.setAttribute('src', '');
+        }
+
+        // DISPLAY CURRENT TIME IN CONSOLE WINDOW
+        const current_time = () => {
+            const now = new Date();
+            const hour = String(now.getHours()).padStart(2, '0');
+            const minute = String(now.getMinutes()).padStart(2, '0');
+            const second = String(now.getSeconds()).padStart(2, '0');
+
+            console.log(`${hour}:${minute}:${second}`);
+        }
+        
+        let startPlay = setInterval(() => {
+            current_time();
+            local_time = new Date();
+            // if ((parseInt(local_time.getHours()) === 7 || parseInt(local_time.getHours()) === 12)
+            //     && local_time.getMinutes() === 0
+            //     && parseInt(local_time.getSeconds()) === 0) {
+            //     fetchWeather();
+            //     fetchDust();
+            // }
+            // TEST CODE----------------------------------------------
+            if (parseInt(local_time.getMinutes()) >= 0
+                && parseInt(local_time.getSeconds()) === 30) {
+                fetchWeather();
+                fetchDust();
+            }
+        }, 1000);
+
+        // 날씨 데이터 호출
+        const fetchWeather = () => {
+            fetch(weatherURL, {
+                type: "GET",
+                dataType: "json",
+                async: "false",
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                const weather = data.weather[0].main;
+                const windSpeed = data.wind.speed;
+                const temperature = Math.round(data.main.temp - 273.15);
+
+                handleHumidityData(data.main.humidity);
+                handleTemperatureData(temperature);
+                handleWeatherData(weather, windSpeed, temperature);
+
+                bg_video.play();
+            }).catch(error  => {
+                console.log('OpenWeather Current API Error');
+            });
+        }
+
+        // 미세먼지 데이터 호출
+        const fetchDust = () => {
+            fetch(dustURL, {
+                type: "GET",
+                dataType: "json",
+                async: "false",
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                const aqi =  data.list[0].main.aqi;
+                handleDustData(aqi);
+            }).catch(error => {
+                console.log('OpenWeather Dust API Error');
+            })
+        }
+    })(window);
+</script>
+</html>
