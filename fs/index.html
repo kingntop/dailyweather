@@ -273,16 +273,19 @@
 
         let first = false;
 
-        var itime = 0;
+        let itime = 0;
+        let i = 10;
+
         let startPlay = setInterval(() => {
             current_time();
             local_time = new Date();
-            itime += 100;
-            if (itime <= 100) {
+            itime += i;
+            if (itime <= i) {
                 fetchWeather();
                 fetchDust();
-                // console.log('fetchDust' + itime) 
+                console.log('fetchDust' + itime) 
             }
+  
             // if (parseInt(local_time.getMinutes()) >= 0 &&
             //     parseInt(local_time.getSeconds()) === 30) {
             //     fetchWeather();
@@ -293,7 +296,7 @@
             if (itime > 10000) {
                 itime = 0;
             }
-        }, 100);
+        }, i*i);
 
         
 
